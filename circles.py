@@ -38,15 +38,17 @@ class Circle:
         if self.display:
             if self.static:
                 pl.plot(self.x + self.r * np.cos(self.t), self.y + self.r * np.sin(self.t), 'k', linewidth=2)
-            else:
-                self.contour = pl.plot(self.x + self.r * np.cos(self.t), self.y + self.r * np.sin(self.t))[0]
+                return
+            self.contour = pl.plot(self.x + self.r * np.cos(self.t), self.y + self.r * np.sin(self.t), linewidth=2)[0]
             color = self.contour.get_color()
             pl.plot(self.xd + self.r * np.cos(self.t), self.yd + self.r * np.sin(self.t), color, linestyle='dashed')
+
+            self.path = pl.plot([self.x], [self.y], color)[0]
 
     def move(self, dx, dy):
         if self.static:
             return
-        vmax = 2
+        vmax = 1
         v = np.sqrt(dx**2 + dy**2)
         if v > vmax:
             dx *= vmax/v
@@ -54,6 +56,9 @@ class Circle:
 
         self.x += dx
         self.y += dy
+
+        path = np.vstack((self.path.get_path().vertices, [self.x, self.y]))
+        self.path.set_data(path[:,0],path[:,1])
         self.draw()
 
     def draw(self):

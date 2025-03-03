@@ -50,18 +50,25 @@ def generate(n):
     return circles
 
 
+# local minimum case
+Circle.reset()
+# circles = [Circle(5, .05, 1, True), Circle(-5, 0, 1, True)]
+# circles[0].set_target(-7, 0)
+# circles[1].set_target(7, 0)
+
 circles = generate(10)
 
 planner = Planner(circles)
 
+dt = 0.1
 
 for it in range(2000):
 
-    v = planner.move()
+    v = planner.move(dt)
 
     if v < 0.001:
         border('b')
-        print('local min after', it, 'iterations')
+        print(f'Local minimum after {it*dt:.2f} sec')
         break
 
     if Circle.minDist(circles) <= 0:
@@ -70,8 +77,8 @@ for it in range(2000):
     
     if all([np.linalg.norm(c.err()) < 0.1 for c in circles]):
         border('g')
-        print('done in', it, 'iterations')
+        print(f'Done in {it*dt:.2f} sec')
         break
 
-    pl.pause(0.05)
+    pl.pause(dt/10)
 
