@@ -19,7 +19,7 @@ class Point:
     def children(self):
         ret = []
 
-        for dx, dy in ((-1,0), (1,0),(0,-1),(0,1),(-1,1),):
+        for dx, dy in ((-1,0), (1,0),(0,-1),(0,1)):
 
             x = self.x+dx
             y = self.y+dy
