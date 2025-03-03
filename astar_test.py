@@ -2,6 +2,7 @@
 
 from astar import astar
 import numpy as np
+from pylab import plot
 
 
 class Point:
@@ -32,7 +33,7 @@ class Point:
 
                 # obstacle @ (5,5) size 3
 
-                if (x-5)**2+(y-5)**2 < 10:
+                if (x-4)**2+(y-6)**2 < 10:
                     continue
 
                 ret.append((Point(self.x+dx,self.y+dy), d))
@@ -44,3 +45,5 @@ start = Point(0,0)
 goal = Point(11,13)
 
 path = astar(start, goal)
+
+plot([p.x for p in path],[p.y for p in path])
