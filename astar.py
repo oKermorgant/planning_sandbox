@@ -52,22 +52,22 @@ def astar(start, goal):
             break
         closed.append(best)
 
-        for child in best.state.children():
+        for child, dist2parent in best.state.children():
 
-            child_g = best.g + child.dist2parent
+            child_g = best.g + dist2parent
 
             visited = get_same(child, closed)
             if visited is not None:
                 if visited.g > child_g:
-                    addNode(child, best, child.dist2parent)
+                    addNode(child, best, dist2parent)
                 continue
 
             twin = get_same(child, nodes)
             if twin is not None:
                 if twin.g > child_g:
-                    addNode(child, best, child.dist2parent)
+                    addNode(child, best, dist2parent)
             else:
-                addNode(child, best, child.dist2parent)
+                addNode(child, best, dist2parent)
 
     # reverse
     path = []
